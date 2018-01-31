@@ -1,0 +1,194 @@
+
+// Color palette used: https://dribbble.com/shots/1885316-AthleteReadiness-Health-Fitness
+$background-primary: #262D32
+$background-secondary: #21272c
+$text-primary: #F5F7F9
+$text-secondary: #908E89
+$color-primary: #EF7F5A
+$color-hint: #F86C5F
+$color-success: #2BCBA8
+$color-danger: #FF2851
+$grey-darker: #A7B6B3
+$grey-lighter: #CED0D2
+
+$radius-default: 5px
+
+$border-dark: 1px solid rgba(0, 0, 0, 0.125)
+
+body
+  background-color: $background-primary
+  color: $text-primary
+
+pre
+  color: $text-primary
+  background: rgba(0, 0, 0, 0.125)
+  border-radius: 5px
+  border: 1px solid rgba(255, 255, 255, 0.125)
+  font-size: 13px
+
+.bg-primary
+  background: $color-primary
+
+.bg-success
+  background: $color-success
+
+.btn
+  background: rgba(255, 255, 255, 0.125)
+  border-radius: 5px
+  border: none;
+  cursor: pointer;
+
+.btn-link
+  color: $color-primary
+  &:hover
+    color: $color-hint
+
+.btn-primary
+  color: $color-hint
+  &:hover
+    color: $color-primary
+    background: rgba(255, 255, 255, 0.25)
+  &:not([disabled]):not(.disabled):active
+    background: $color-primary
+    color: $text-primary
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.25)
+  &:focus
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.25)
+
+.btn-success
+  color: $color-success
+  &:hover
+    color: $color-success
+    background: rgba(255, 255, 255, 0.25)
+  &:not([disabled]):not(.disabled):active
+    background: $color-success
+    color: $text-primary
+    box-shadow: 0 0 0 0.2rem rgba(43, 203, 168, 0.25)
+  &:focus
+    box-shadow: 0 0 0 0.2rem rgba(43, 203, 168, 0.25)
+
+.btn-danger
+  color: $color-danger
+  &:hover
+    color: $color-danger
+    background: rgba(255, 255, 255, 0.25)
+  &:not([disabled]):not(.disabled):active
+    background: $color-danger
+    color: $text-primary
+    box-shadow: 0 0 0 0.2rem rgba(255, 40, 81, 0.25)
+  &:focus
+    box-shadow: 0 0 0 0.2rem rgba(255, 40, 81, 0.25)
+
+.card
+  border-radius: $radius-default
+  .card-header
+    border: none
+  .card-footer
+    border: none
+    overflow: hidden
+  &-dropzone
+    width: 100%
+    background: rgba(0, 0, 0, 0.250)
+    padding: 20px
+    border: 2px solid $text-secondary
+    border-style: dashed;
+    border-radius: 5px
+    font-size: 16px
+    &.dragging
+      color: $color-hint
+      border-color: $color-hint
+      box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.75)
+
+.card-dark
+  background-color: $background-secondary
+  .card-header, .card-footer
+    background-color: $background-secondary
+
+.container
+  margin-top: 15px
+  max-width: 600px
+
+.dropdown-menu-dark
+  background: $background-secondary
+  border-bottom: $border-dark
+  
+  .dropdown-item
+    color: $text-primary
+  
+  .dropdown-item:hover,
+  .dropdown-item:focus
+    background: rgba(255, 255, 255, 0.25)
+  
+  .dropdown-item:focus
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.25)
+  
+  .dropdown-item:active
+    background: $color-primary
+    color: $text-primary
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.25)
+
+.dropdown-menu-right
+  right: 0
+  left: inherit
+
+
+.form-control
+  background: rgba(255, 255, 255, 0.125)
+  color: $text-primary
+  font-weight: normal
+  border: 1px solid rgba(255, 255, 255, 0.125)
+  border-radius: 5px
+  &:focus
+    background: rgba(255, 255, 255, 0.2)
+    color: $text-primary
+    border-color: $color-primary
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 90, 0.125)
+
+.img
+  &-thumbnail
+    border-radius: 5px
+    width: 120px
+    padding: 0;
+  &-upload-thumbnail
+    border-radius: 5px
+    width: 140px
+
+.navbar-dark
+  background: $background-secondary
+  border-bottom: $border-dark
+
+.nav-item
+  color: $text-primary
+
+.nav-item.active
+  color: $color-hint
+
+.text-primary
+  color: $color-primary !important
+
+.text-success
+  color: $color-success
+
+.text-danger
+  color: $color-danger
+
+.rounded
+  $radius-default: 5px
+
+.rotation-permanent
+    -webkit-transition-property: -webkit-transform
+    -webkit-transition-duration: 1s
+    -moz-transition-property: -moz-transform
+    -moz-transition-duration: 1s
+    transition-property: transform
+    transition-duration: 1s
+    -webkit-animation-name: rotate
+    -webkit-animation-duration: 1s
+    -webkit-animation-iteration-count: infinite
+    -webkit-animation-timing-function: linear
+
+@keyframes rotate
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

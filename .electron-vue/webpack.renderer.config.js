@@ -48,6 +48,17 @@ let rendererConfig = {
           use: 'css-loader'
         })
       },
+      // Added by @vicmars5
+      {
+        test: /\.sass$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader'
+        }, {
+          loader: 'sass-loader'
+        }]
+      },
       {
         test: /\.html$/,
         use: 'vue-html-loader'
