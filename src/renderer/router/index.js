@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'circle-centroid',
-      component: require('@/components/views/CircleCentroid').default
+      component: require('@/components/views/CircleCentroid/index.vue').default
     },
     {
       path: '*',

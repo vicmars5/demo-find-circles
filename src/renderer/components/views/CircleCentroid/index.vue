@@ -9,36 +9,30 @@
         <i class="fa fa-file-image-o" aria-hidden="true"></i>
       </p>
     </dropzone>
-    <div
-      v-for="file in files"
-      class="card card-dark">
-      <div class="card-body">
-        Name: {{ file.original.name }}
-      </div>
-    </div>
+    <photo-card
+      v-for="photo in photos"
+      :file="photo"/>
   </div>
 </template>
 
 <script>
 import Dropzone from '@/components/common/Dropzone'
+import PhotoCard from './PhotoCard'
 
 export default {
   data () {
     return {
-      files: []
+      photos: []
     }
   },
   components: {
-    Dropzone
+    Dropzone,
+    PhotoCard
   },
   methods: {
-    onFilesDropped (files) {
+    async onFilesDropped (files) {
       console.log('files ', files)
-      files.forEach((file) => {
-        this.files.push({
-          original: file
-        })
-      })
+      files.forEach(file => this.photos.push(file))
     }
   }
 }
