@@ -1,4 +1,6 @@
 
+const VISITED = 120
+const BACKGROUND = 255
 class Drawer {
   /**
    *
@@ -21,7 +23,7 @@ class Drawer {
    * @param {number} color.a - 0 - 255
    */
   drawPoint (pos, color) {
-    const imgd = this.ctx.createImageData(3, 3)
+    const imgd = this.ctx.createImageData(1, 1)
     for (let i = 0; i < imgd.data.length; i += 4) {
       imgd.data[i] = color.r
       imgd.data[i + 1] = color.g
@@ -36,64 +38,87 @@ class Drawer {
    */
   findCircle (background, imgd) {
     // const imgd = this.ctx.getImageData(0, 0, this.width, this.height)
-    let maxX = null
-    let minX = null
-    let maxY = null
-    let minY = null
+    let circles = []
 
     for (let y = 0; y < this.height; y++) {
-      let found = false
       for (let x = 0; x < this.width; x++) {
         const i = this.getPos(x, y)
-        if (imgd.data[i] !== 255 && imgd.data[i + 3] !== 254) {
-          found = true
-          imgd.data[i + 3] = 254
-          if (maxX === null || x > maxX) {
-            maxX = x
-          }
-          if (minX === null || x < minX) {
-            minX = x
-          }
-          if (maxY === null || y > maxY) {
-            maxY = y
-          }
-          if (minY === null || y < minY) {
-            minY = y
-          }
-          /*
-          console.log({
-            data: imgd.data,
-            i,
-            x,
-            y
-          })
-          */
-        } else {
-          if (found) {
-            break
-          }
+        if (imgd.data[i] !== BACKGROUND && imgd.data[i + 3] !== VISITED) {
+          imgd.data[i + 3] = VISITED
+          const circle = this.mapCircle(imgd.data, x, y)
+          circles.push(circle)
         }
       }
     }
+    return circles
+  }
 
-    if (minX === null) {
-      return null
-    }
+  /**
+   *
+   */
+  mapCircle (data, x, y) {
+    let i
+    let px = x
+    let py = y
+    let minY = y
+    let maxY = y
+    let minX = x
+    let maxX = x
+
+    do {
+      i = this.getPos(px, py)
+
+      if (data[i] === BACKGROUND || py >= this.height) {
+        break
+      }
+      data[i + 3] = VISITED
+      maxY = py
+
+      let npx = px // negaitve position x
+      let ppx = px // positive position x
+      // go right
+      do {
+        ppx++
+        i = this.getPos(ppx, py)
+        if (data[i] === BACKGROUND || ppx >= this.width) {
+          break
+        }
+        data[i + 3] = VISITED// mark as visited
+        if (ppx > maxX) {
+          maxX = ppx
+        }
+      } while (true)
+
+      // go left
+      do {
+        npx--
+        i = this.getPos(npx, py)
+        if (data[i] === BACKGROUND || npx < 0) {
+          break
+        }
+        data[i + 3] = VISITED // mark as visited
+        if (npx < minX) {
+          minX = npx
+        }
+      } while (true)
+
+      px = Math.round(minX + (maxX - minX) / 2) // corrige centro
+      py++
+    } while (true)
 
     return {
       limits: {
         minX,
-        minY,
         maxX,
+        minY,
         maxY
       },
       center: {
-        x: minX + (maxX - minX) / 2, // Center x
-        y: minY + (maxY - minY) / 2 // Center y
+        x: Math.round(minX + (maxX - minX) / 2), // corrige centro
+        y: Math.round(minY + (maxY - minY) / 2)
       }
     }
   }
-
   /**
    * data array
    */

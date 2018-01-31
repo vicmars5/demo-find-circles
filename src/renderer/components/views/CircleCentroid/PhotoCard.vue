@@ -73,17 +73,19 @@ export default {
       this.drawer = new Drawer(ctx, width, height)
 
       const imgd = ctx.getImageData(0, 0, width, height)
-      let circle = null
-      circle = this.drawer.findCircle(255, imgd)
-      console.log('circle', circle)
-      this.drawer.drawPoint(circle.center, {
-        r: 255,
-        g: 0,
-        b: 0,
-        a: 255
+      console.log('length', imgd.data.length)
+      console.time('circles')
+      const circles = this.drawer.findCircle(255, imgd)
+      circles.forEach((circle) => {
+        this.drawer.drawPoint(circle.center, {
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 255
+        })
       })
-      circle = this.drawer.findCircle(255, imgd)
-      console.log('circle', circle)
+      this.processing = false
+      console.timeEnd('circles')
     }
   },
   async created () {
