@@ -25,6 +25,12 @@
         <canvas style="width:100%" ref="imgCanvas">
         </canvas>
       </p>
+      <p>
+      <b>width</b> {{ width }}, <b>height</b> {{ height }}
+      </p>
+      <pre><code>const circles = {{
+        JSON.stringify(circles.map(circle => circle.center), null, 2)
+      }}</code></pre>
     </div>
   </div>
 </template>
@@ -39,14 +45,15 @@ export default {
     return {
       url: null,
       width: null,
+      height: null,
       canvasDrawed: false,
       drawer: null,
-      processing: false
+      processing: false,
+      circles: []
     }
   },
   watchers: {
     width (val) {
-      console.log('width', val)
     }
   },
   methods: {
@@ -68,13 +75,14 @@ export default {
       this.$refs.imgCanvas.width = width
       this.$refs.imgCanvas.height = height
 
+      this.width = width
+      this.height = height
+
       const ctx = this.$refs.imgCanvas.getContext('2d')
       ctx.drawImage(this.$refs.img, 0, 0, width, height)
       this.drawer = new Drawer(ctx, width, height)
 
       const imgd = ctx.getImageData(0, 0, width, height)
-      console.log('length', imgd.data.length)
-      console.time('circles')
       const circles = this.drawer.findCircle(255, imgd)
       circles.forEach((circle) => {
         this.drawer.drawPoint(circle.center, {
@@ -84,8 +92,8 @@ export default {
           a: 255
         })
       })
+      this.circles = circles
       this.processing = false
-      console.timeEnd('circles')
     }
   },
   async created () {
