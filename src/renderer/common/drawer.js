@@ -36,7 +36,7 @@ class Drawer {
   /**
    * @param {number} background - 0-255
    */
-  findCircle (background, imgd) {
+  findCircle (imgd) {
     // const imgd = this.ctx.getImageData(0, 0, this.width, this.height)
     let circles = []
 

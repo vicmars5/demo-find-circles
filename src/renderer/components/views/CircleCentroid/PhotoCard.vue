@@ -83,7 +83,7 @@ export default {
       this.drawer = new Drawer(ctx, width, height)
 
       const imgd = ctx.getImageData(0, 0, width, height)
-      const circles = this.drawer.findCircle(255, imgd)
+      const circles = this.drawer.findCircle(imgd)
       circles.forEach((circle) => {
         this.drawer.drawPoint(circle.center, {
           r: 255,
