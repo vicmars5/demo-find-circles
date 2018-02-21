@@ -38,6 +38,7 @@
 <script>
 import PromiseFileReader from 'promise-file-reader'
 import Drawer from '@/common/drawer'
+import { findCircles } from 'native-circle-finder'
 
 export default {
   props: ['file'],
@@ -84,6 +85,7 @@ export default {
 
       const imgd = ctx.getImageData(0, 0, width, height)
       const circles = this.drawer.findCircle(imgd)
+      findCircles(imgd.data, imgd.data.length, width, height)
       circles.forEach((circle) => {
         this.drawer.drawPoint(circle.center, {
           r: 255,
@@ -104,6 +106,7 @@ export default {
   updated () {
   }
 }
+// build: ./node_modules/.bin/node-gyp --target=1.7.5 --arch=x64 --dist-url=https://atom.io/download/electron rebuild
 </script>
 
 <style lang="sass" scoped>
