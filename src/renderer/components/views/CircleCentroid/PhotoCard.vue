@@ -29,7 +29,7 @@
       <b>width</b> {{ width }}, <b>height</b> {{ height }}
       </p>
       <pre><code>const circles = {{
-        JSON.stringify(circles.map(circle => circle.center), null, 2)
+        JSON.stringify(circles, null, 2)
       }}</code></pre>
     </div>
   </div>
@@ -84,10 +84,24 @@ export default {
       this.drawer = new Drawer(ctx, width, height)
 
       const imgd = ctx.getImageData(0, 0, width, height)
-      const circles = this.drawer.findCircle(imgd)
-      findCircles(imgd.data, imgd.data.length, width, height)
+      let circles = []
+      console.time('js version')
+      circles = this.drawer.findCircle(imgd).map(circle => circle.center)
+      console.timeEnd('js version')
+
+      console.time('native version')
+      const buff = findCircles(Buffer.from(imgd.data), width, height, 255, 125)
+      circles = []
+      for (let i = 0; i < buff.length; i += 8) {
+        circles.push({
+          x: buff.readUIntBE(i, 4),
+          y: buff.readUIntBE(i + 4, 4)
+        })
+      }
+      console.timeEnd('native version')
+
       circles.forEach((circle) => {
-        this.drawer.drawPoint(circle.center, {
+        this.drawer.drawPoint(circle, {
           r: 255,
           g: 0,
           b: 0,
