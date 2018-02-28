@@ -2,6 +2,10 @@
 
 > An electron-vue project
 
+## Test images
+This example only work with white background images.
+You can find 3 tested images in `./test-images/`.
+
 #### Build Setup
 
 ``` bash
